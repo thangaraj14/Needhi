@@ -1,8 +1,14 @@
 package com.whistle.needhi.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Setter
+@Getter
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,28 +20,9 @@ public class Person {
 
     @Column(name = "phone_number")
     long phoneNumber;
+/*
+    @OneToMany
+    @JoinColumn(name = "complaint_id")
+    List<Complaint> complaints;*/
 
-    public long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(long phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }

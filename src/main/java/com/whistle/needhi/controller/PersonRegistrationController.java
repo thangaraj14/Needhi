@@ -8,12 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -49,11 +45,11 @@ public class PersonRegistrationController {
 
     @PostMapping(value = URL_PREFIX, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Map<String, URI>> saveUser(@RequestBody PersonDTO user) {
-        long UserID = personService.saveOrUpdate(user);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(User_ID).buildAndExpand(UserID)
-                .toUri();
-        return ResponseEntity.created(location)
-                .body(Collections.singletonMap("User successfully got created", location));
+    public ResponseEntity<Long> saveUser(@RequestBody PersonDTO user) {
+        long userID = personService.saveOrUpdate(user);
+        if (userID == -1) {
+            return ResponseEntity.status(400).body(userID);
+        }
+        return ResponseEntity.status(201).body(userID);
     }
 }

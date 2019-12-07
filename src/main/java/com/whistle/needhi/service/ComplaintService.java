@@ -6,6 +6,7 @@ import com.whistle.needhi.repository.ComplaintRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,9 +27,12 @@ public class ComplaintService {
         return complaintList;
     }
 
-    public long saveOrUpdate(ComplaintDTO complaintDTO) {
+    public HttpStatus saveOrUpdate(ComplaintDTO complaintDTO) {
         Complaint complaint = complaintRepository.save(toEntity(complaintDTO));
-        return complaint.getId();
+        if (complaint != null) {
+            return HttpStatus.CREATED;
+        }
+        return HttpStatus.BAD_REQUEST;
     }
 
     public Optional<Complaint> getComplaint(long id) {
@@ -44,7 +48,7 @@ public class ComplaintService {
         complaint.setDescription(dto.getDescription());
         complaint.setStatus(dto.getStatus());
         complaint.setLocation(dto.getLocation());
-        complaint.setAttachment(dto.getAttachment());
+        complaint.setImage(dto.getImage());
         complaint.setDate(dto.getDate());
         complaint.setPerson(dto.getPerson());
         return complaint;
