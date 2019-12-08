@@ -3,9 +3,11 @@ package com.whistle.needhi.service;
 import com.whistle.needhi.dto.ComplaintDTO;
 import com.whistle.needhi.model.Complaint;
 import com.whistle.needhi.repository.ComplaintRepository;
+import com.whistle.needhi.repository.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,14 @@ public class ComplaintService {
     @Autowired
     ComplaintRepository complaintRepository;
 
+    @Autowired
+    Repository repository;
+
     Logger logger = LoggerFactory.getLogger(ComplaintService.class);
 
     public List<Complaint> getAllComplaints() {
         List<Complaint> complaintList = new ArrayList<>();
-        complaintRepository.findAll().forEach(complaintList::add);
+        repository.findTop50ByOrderByIdDesc().forEach(complaintList::add);
         return complaintList;
     }
 
