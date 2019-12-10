@@ -16,6 +16,7 @@ public class ComplaintDTO {
     String description;
     Date date;
     Status status;
+    String place;
     Location location;
     byte[] image;
     Person person;
