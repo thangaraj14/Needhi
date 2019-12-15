@@ -20,6 +20,15 @@ public class Person {
 
     @Column(name = "phone_number")
     long phoneNumber;
+
+    @Column(name = "house_number")
+    long houseNumber;
+
+    @Column(name = "street_Name")
+    String streetName;
+
+    @Column(name = "location")
+    String location;
 /*
     @OneToMany
     @JoinColumn(name = "complaint_id")

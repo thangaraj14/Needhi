@@ -53,6 +53,7 @@ public class ComplaintService {
         complaint.setDescription(dto.getDescription());
         complaint.setStatus(dto.getStatus());
         complaint.setLocation(dto.getLocation());
+        complaint.setPlace(dto.getPlace());
         complaint.setImage(dto.getImage());
         complaint.setDate(dto.getDate());
         complaint.setPerson(dto.getPerson());

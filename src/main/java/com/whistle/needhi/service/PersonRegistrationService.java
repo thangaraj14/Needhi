@@ -6,10 +6,8 @@ import com.whistle.needhi.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +29,9 @@ public class PersonRegistrationService {
     public long saveOrUpdate(PersonDTO personDTO) {
 
         Person person = personRepository.save(toEntity(personDTO));
-        if(person==null) return -1;
+        if (person == null) {
+            return -1;
+        }
         return person.getId();
     }
 
@@ -47,6 +47,9 @@ public class PersonRegistrationService {
         Person person = new Person();
         person.setName(dto.getName());
         person.setPhoneNumber(dto.getPhoneNumber());
+        person.setHouseNumber(dto.getHouseNumber());
+        person.setStreetName(dto.getStreetName());
+        person.setLocation(dto.getLocation());
         return person;
     }
 }
