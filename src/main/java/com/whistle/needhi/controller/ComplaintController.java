@@ -42,6 +42,5 @@ public class ComplaintController {
     @ResponseStatus(HttpStatus.CREATED)
     public HttpStatus saveComplaint(@RequestBody ComplaintDTO complaintDTO) {
        return complaintService.saveOrUpdate(complaintDTO);
-
     }
 }

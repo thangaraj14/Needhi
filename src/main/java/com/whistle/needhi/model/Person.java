@@ -22,9 +22,9 @@ public class Person {
     long phoneNumber;
 
     @Column(name = "house_number")
-    long houseNumber;
+    String houseNumber;
 
-    @Column(name = "street_Name")
+    @Column(name = "street_name")
     String streetName;
 
     @Column(name = "location")

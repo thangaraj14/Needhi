@@ -10,7 +10,7 @@ public class PersonDTO {
     long id;
     String name;
     long phoneNumber;
-    long houseNumber;
+    String houseNumber;
     String streetName;
     String location;
 
