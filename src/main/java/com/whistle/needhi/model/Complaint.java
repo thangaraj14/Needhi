@@ -23,14 +23,14 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
-public class Complaint {
+public class Complaint extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "complaint_id")
     long id;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 2048)
     String description;
 
     @Column(name = "place")
@@ -56,5 +56,8 @@ public class Complaint {
     @Column(name = "image")
     @Type(type = "org.hibernate.type.BinaryType")
     byte[] image;
+
+    @Column(name = "likes")
+    int likes;
 
 }

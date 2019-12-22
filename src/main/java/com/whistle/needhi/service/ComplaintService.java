@@ -3,11 +3,14 @@ package com.whistle.needhi.service;
 import com.whistle.needhi.dto.ComplaintDTO;
 import com.whistle.needhi.model.Complaint;
 import com.whistle.needhi.repository.ComplaintRepository;
-import com.whistle.needhi.repository.Repository;
+import com.whistle.needhi.repository.PagingComplaintRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.support.Repositories;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +25,21 @@ public class ComplaintService {
     ComplaintRepository complaintRepository;
 
     @Autowired
-    Repository repository;
+    PagingComplaintRepository repository;
 
     Logger logger = LoggerFactory.getLogger(ComplaintService.class);
 
-    public List<Complaint> getAllComplaints() {
-        List<Complaint> complaintList = new ArrayList<>();
-        repository.findTop50ByOrderByIdDesc().forEach(complaintList::add);
-        return complaintList;
+    public List<Complaint> getAllComplaints(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by("id").descending());
+        // repository.findTop50ByOrderByIdDesc().forEach(complaintList::add);
+
+        Page<Complaint> pagedResult = repository.findAll(paging);
+
+        if (pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public HttpStatus saveOrUpdate(ComplaintDTO complaintDTO) {
@@ -58,5 +68,20 @@ public class ComplaintService {
         complaint.setDate(dto.getDate());
         complaint.setPerson(dto.getPerson());
         return complaint;
+    }
+
+    public HttpStatus updatePost(Long complaintId, Complaint postRequest) {
+        Optional<Complaint> complaint = complaintRepository.findById(complaintId).map(post -> {
+            post.setDescription(postRequest.getDescription());
+            post.setPlace(postRequest.getPlace());
+            post.setLikes(postRequest.getLikes());
+            post.setLocation(postRequest.getLocation());
+            return complaintRepository.save(post);
+        });
+        if (complaint != null) {
+            return HttpStatus.ACCEPTED;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
     }
 }

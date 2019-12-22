@@ -50,6 +50,7 @@ public class PersonRegistrationService {
         person.setHouseNumber(dto.getHouseNumber());
         person.setStreetName(dto.getStreetName());
         person.setLocation(dto.getLocation());
+        person.setRole(dto.getRole());
         return person;
     }
 }

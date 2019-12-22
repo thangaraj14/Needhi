@@ -29,6 +29,9 @@ public class Person {
 
     @Column(name = "location")
     String location;
+
+    @Column(name = "role")
+    String role;
 /*
     @OneToMany
     @JoinColumn(name = "complaint_id")

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,9 @@ public class ComplaintController {
 
     @GetMapping(value = URL_PREFIX)
     @ResponseStatus(HttpStatus.OK)
-    public List<Complaint> getAllComplaints() {
-        return complaintService.getAllComplaints();
+    public List<Complaint> getAllComplaints(@RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
+        return complaintService.getAllComplaints(pageNo, pageSize);
     }
 
     @GetMapping(value = URL_PREFIX + COMPLAINT_ID)
@@ -41,6 +43,11 @@ public class ComplaintController {
     @PostMapping(value = URL_PREFIX, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public HttpStatus saveComplaint(@RequestBody ComplaintDTO complaintDTO) {
-       return complaintService.saveOrUpdate(complaintDTO);
+        return complaintService.saveOrUpdate(complaintDTO);
+    }
+
+    @PutMapping(value = URL_PREFIX + COMPLAINT_ID)
+    public HttpStatus updatePost(@PathVariable Long complaintId, @Valid @RequestBody Complaint postRequest) {
+        return complaintService.updatePost(complaintId,postRequest);
     }
 }

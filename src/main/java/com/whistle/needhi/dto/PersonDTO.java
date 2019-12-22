@@ -13,5 +13,6 @@ public class PersonDTO {
     String houseNumber;
     String streetName;
     String location;
+    String role;
 
 }
